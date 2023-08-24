@@ -1,32 +1,32 @@
 #include "shell.h"
 
 /**
- * interactive - Checks if the shell is in interactive mode
- * @info: Pointer to struct address
+ * check_interactive - Checks if the shell is in interactive mode
+ * @inf: Pointer to struct address
  *
  * Return: 1 if interactive mode, 0 if not
  */
-int interactive(info_t *info)
+int check_interactive(info_t *inf)
 {
-	return (isatty(STDIN_FILENO) && info->readfd <= 2);
+	return (isatty(STDIN_FILENO) && inf->readfd < 3);
 }
 
 /**
- * is_delim - Checks if a character is a delimiter
+ * checkis_delim - Checks if a character is a delimiter
  * @c: The character to check
  * @delim: The delimiter string
  * Return: 1 if true, 0 if false
  */
-int is_delim(char c, char *delim)
+int checkis_delim(char a, char *del)
 {
-	if (!delim)
+	if (!del)
 		return (0);
 
-	while (*delim)
+	while (*del)
 	{
-		if (*delim == c)
+		if (*del == a)
 			return (1);
-		delim++;
+		del++;
 	}
 	return (0);
 }
@@ -36,9 +36,9 @@ int is_delim(char c, char *delim)
  * @c: The character to check
  * Return: 1 if c is alphabetic, 0 otherwise
  */
-int is_alphabetic(int c)
+int is_alphabetic(int i)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+	return ((i >= 'a' && i <= 'z') || (i >= 'A' && i <= 'Z'));
 }
 
 /**
@@ -46,30 +46,31 @@ int is_alphabetic(int c)
  * @s: The string to be converted
  * Return: 0 if no numbers in the string, the converted number otherwise
  */
-int custom_atoi(char *s)
+int custom_atoi(char *r)
 {
-	int i, sign = 1, flag = 0, output;
-	unsigned int result = 0;
+	int i;
+	int sign = 1, f = 0, out;
+	unsigned int res = 0;
 
-	for (i = 0; s[i] != '\0' && flag != 2; i++)
+	for (i = 0; r[i] != '\0' && f != 2; i++)
 	{
-		if (s[i] == '-')
+		if (r[i] == '-')
 			sign *= -1;
 
-		if (s[i] >= '0' && s[i] <= '9')
+		if (r[i] >= '0' && r[i] <= '9')
 		{
-			flag = 1;
-			result *= 10;
-			result += (s[i] - '0');
+			f = 1;
+			res *= 10;
+			res += (r[i] - '0');
 		}
-		else if (flag == 1)
-			flag = 2;
+		else if (f == 1)
+			f = 2;
 	}
 
 	if (sign == -1)
-		output = -result;
+		out = -res;
 	else
-		output = result;
+		out = res;
 
-	return (output);
+	return (out);
 }
