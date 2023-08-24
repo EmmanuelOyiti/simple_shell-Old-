@@ -12,7 +12,7 @@ int _erratoi(char *s)
 	unsigned long int result = 0;
 
 	if (*s == '+')
-		s++;  /* TODO: why does this return main, 255? */
+		s++;
 	for (i = 0; s[i] != '\0'; i++)
 	{
 		if (s[i] >= '0' && s[i] <= '9')
@@ -120,7 +120,8 @@ char *convert_number(long int num, int base, int flags)
 }
 
 /**
- * remove_comments - changes the first occurrence of "#" with "0" in the function
+ * remove_comments - changes the first occurrence of
+ * "#" with "0" in the function
  * @buf: address of the modified string
  * Return: Always 0;
  */
