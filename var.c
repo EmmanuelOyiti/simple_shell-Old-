@@ -8,30 +8,30 @@
  *
  * Return: 1 if chain delimeter, 0 otherwise
  */
-int is_chain(info_t *info, char *buf, size_t *p)
+int is_chain(info_t *in, char *b, size_t *point)
 {
-	size_t j = *p;
+	size_t i = *point;
 
-	if (buf[j] == '|' && buf[j + 1] == '|')
+	if (b[i] == '|' && b[i + 1] == '|')
 	{
-		buf[j] = 0;
-		j++;
-		info->cmd_buf_type = CMD_OR;
+		b[i] = 0;
+		i++;
+		in->cmd_buf_type = CMD_OR;
 	}
-	else if (buf[j] == '&' && buf[j + 1] == '&')
+	else if (b[i] == '&' && b[i + 1] == '&')
 	{
-		buf[j] = 0;
-		j++;
-		info->cmd_buf_type = CMD_AND;
+		b[i] = 0;
+		i++;
+		in->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[j] == ';') /* found end of this command */
+	else if (b[i] == ';') /* found end of this command */
 	{
-		buf[j] = 0; /* replace semicolon with null */
-		info->cmd_buf_type = CMD_CHAIN;
+		b[i] = 0; /* replace semicolon with null */
+		in->cmd_buf_type = CMD_CHAIN;
 	}
 	else
 		return (0);
-	*p = j;
+	*point = i;
 	return (1);
 }
 
@@ -45,28 +45,28 @@ int is_chain(info_t *info, char *buf, size_t *p)
  *
  * Return: Void
  */
-void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
+void check_chain(info_t *in, char *buff, size_t *point, size_t i, size_t length)
 {
-	size_t j = *p;
+	size_t k = *point;
 
-	if (info->cmd_buf_type == CMD_AND)
+	if (in->cmd_buf_type == CMD_AND)
 	{
-		if (info->status)
+		if (in->status)
 		{
-			buf[i] = 0;
-			j = len;
+			buff[i] = 0;
+			k = length;
 		}
 	}
-	if (info->cmd_buf_type == CMD_OR)
+	if (in->cmd_buf_type == CMD_OR)
 	{
-		if (!info->status)
+		if (!in->status)
 		{
-			buf[i] = 0;
-			j = len;
+			buff[i] = 0;
+			k = length;
 		}
 	}
 
-	*p = j;
+	*point = k;
 }
 
 /**
@@ -75,65 +75,65 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replace_alias(info_t *info)
+int replace_alias(info_t *in)
 {
-	int i;
+	int j;
 	list_t *node;
-	char *p;
+	char *point;
 
-	for (i = 0; i < 10; i++)
+	for (j = 0; j < 10; j++)
 	{
-		node = node_starts_with(info->alias, info->argv[0], '=');
+		node = node_starts_with(in->alias, in->argv[0], '=');
 		if (!node)
 			return (0);
-		free(info->argv[0]);
-		p = _strchr(node->str, '=');
-		if (!p)
+		free(in->argv[0]);
+		point = _strchr(node->str, '=');
+		if (!point)
 			return (0);
-		p = _strdup(p + 1);
-		if (!p)
+		point = _strdup(point + 1);
+		if (!point)
 			return (0);
-		info->argv[0] = p;
+		in->argv[0] = point;
 	}
 	return (1);
 }
 
 /**
- * replace_vars - replaces vars in the tokenized string
+ * replace_var - replaces vars in the tokenized string
  * @info: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replace_vars(info_t *info)
+int replace_var(info_t *in)
 {
-	int i = 0;
-	list_t *node;
+	int j = 0;
+	list_t *n;
 
-	for (i = 0; info->argv[i]; i++)
+	for (j = 0; in->argv[j]; j++)
 	{
-		if (info->argv[i][0] != '$' || !info->argv[i][1])
+		if (in->argv[j][0] != '$' || !in->argv[j][1])
 			continue;
 
-		if (!_strcmp(info->argv[i], "$?"))
+		if (!_strcmp(in->argv[j], "$?"))
 		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(info->status, 10, 0)));
+			replace_string(&(in->argv[j]),
+				_strdup(convert_number(in->status, 10, 0)));
 			continue;
 		}
-		if (!_strcmp(info->argv[i], "$$"))
+		if (!_strcmp(in->argv[j], "$$"))
 		{
-			replace_string(&(info->argv[i]),
+			replace_string(&(in->argv[j]),
 				_strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
-		if (node)
+		n = node_starts_with(in->env, &in->argv[j][1], '=');
+		if (n)
 		{
-			replace_string(&(info->argv[i]),
-				_strdup(_strchr(node->str, '=') + 1));
+			replace_string(&(in->argv[j]),
+				_strdup(_strchr(n->str, '=') + 1));
 			continue;
 		}
-		replace_string(&info->argv[i], _strdup(""));
+		replace_string(&in->argv[j], _strdup(""));
 
 	}
 	return (0);
@@ -146,10 +146,10 @@ int replace_vars(info_t *info)
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replace_string(char **old, char *new)
+int replace_string(char **ol, char *n)
 {
-	free(*old);
-	*old = new;
+	free(*ol);
+	*ol = n;
 	return (1);
 }
 

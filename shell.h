@@ -161,8 +161,8 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* toem_atoi.c */
-int interactive(info_t *);
-int is_delim(char, char *);
+int check_interactive(info_t *);
+int checkis_delim(char, char *);
 int _isalpha(int);
 int _atoi(char *);
 
@@ -229,7 +229,7 @@ ssize_t get_node_index(list_t *, list_t *);
 int is_chain(info_t *, char *, size_t *);
 void check_chain(info_t *, char *, size_t *, size_t, size_t);
 int replace_alias(info_t *);
-int replace_vars(info_t *);
+int replace_var(info_t *);
 int replace_string(char **, char *);
 
 #endif
