@@ -48,7 +48,7 @@ typedef struct liststr
 	int num;
 	char *str;
 	struct liststr *next;
-} list_t;
+} list_element;
 
 /**
  *struct passinfo - contains pseudo-arguements to pass into a function,
@@ -82,9 +82,9 @@ typedef struct passinfo
 	int err_num;
 	int linecount_flag;
 	char *fname;
-	list_t *env;
-	list_t *history;
-	list_t *alias;
+	list_element *env;
+	list_element *history;
+	list_element *alias;
 	char **environ;
 	int env_changed;
 	int status;
@@ -118,9 +118,9 @@ void find_cmd(info_t *);
 void fork_cmd(info_t *);
 
 /* toem_parser.c */
-int is_cmd(info_t *, char *);
-char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
+int check_executable(info_t *, char *);
+char *copy_the_characters(char *, int, int);
+char *search_command_path(info_t *, char *, char *);
 
 /* loophsh.c */
 int loophsh(char **);
@@ -212,18 +212,18 @@ int add_entry_hstry_list(info_t *info, char *buf, int linecount);
 int upt_hstry_number(info_t *info);
 
 /* toem_lists.c */
-list_t *add_node(list_t **, const char *, int);
-list_t *add_node_end(list_t **, const char *, int);
-size_t print_list_str(const list_t *);
-int delete_node_at_index(list_t **, unsigned int);
-void free_list(list_t **);
+list_element *insert_at_start(list_element **, const char *, int);
+list_element *insert_at_end(list_element **, const char *, int);
+size_t print_str_elements(const list_element *);
+int remove_element_at_index(list_element **, unsigned int);
+void free_element_list(list_element **);
 
 /* toem_lists1.c */
-size_t list_len(const list_t *);
-char **list_to_strings(list_t *);
-size_t print_list(const list_t *);
-list_t *node_starts_with(list_t *, char *, char);
-ssize_t get_node_index(list_t *, list_t *);
+size_t list_len(const list_element *);
+char **list_to_strings(list_element *);
+size_t print_list(const list_element *);
+list_element *node_starts_with(list_element *, char *, char);
+ssize_t get_node_index(list_element *, list_element *);
 
 /* toem_vars.c */
 int is_chain(info_t *, char *, size_t *);

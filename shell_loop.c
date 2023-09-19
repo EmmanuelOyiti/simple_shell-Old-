@@ -78,7 +78,7 @@ void find_cmd(info_t *info)
 	if (!k)
 		return;
 
-	path = find_path(info, get_var_value(info, "PATH="), info->argv[0]);
+	path = search_command_path(info, get_var_value(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->path = path;
@@ -87,7 +87,7 @@ void find_cmd(info_t *info)
 	else
 	{
 		if ((check_interactive(info) || get_var_value(info, "PATH=")
-			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
+			|| info->argv[0][0] == '/') && check_executable(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{

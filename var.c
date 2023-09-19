@@ -78,7 +78,7 @@ void check_chain(info_t *in, char *buff, size_t *point, size_t i, size_t length)
 int replace_alias(info_t *in)
 {
 	int j;
-	list_t *node;
+	list_element *node;
 	char *point;
 
 	for (j = 0; j < 10; j++)
@@ -107,7 +107,7 @@ int replace_alias(info_t *in)
 int replace_var(info_t *in)
 {
 	int j = 0;
-	list_t *n;
+	list_element *n;
 
 	for (j = 0; in->argv[j]; j++)
 	{

@@ -26,7 +26,7 @@ char **get_environ(info_t *info)
  */
 int _unsetenv(info_t *info, char *var)
 {
-	list_t *node = info->env;
+	list_element *node = info->env;
 	size_t i = 0;
 	char *p;
 
@@ -38,7 +38,7 @@ int _unsetenv(info_t *info, char *var)
 		p = starts_with(node->str, var);
 		if (p && *p == '=')
 		{
-			info->env_changed = delete_node_at_index(&(info->env), i);
+			info->env_changed = remove_element_at_index(&(info->env), i);
 			i = 0;
 			node = info->env;
 			continue;
@@ -61,7 +61,7 @@ int _unsetenv(info_t *info, char *var)
 int _setenv(info_t *info, char *var, char *value)
 {
 	char *buf = NULL;
-	list_t *node;
+	list_element *node;
 	char *p;
 
 	if (!var || !value)
@@ -86,7 +86,7 @@ int _setenv(info_t *info, char *var, char *value)
 		}
 		node = node->next;
 	}
-	add_node_end(&(info->env), buf, 0);
+	insert_at_end(&(info->env), buf, 0);
 	free(buf);
 	info->env_changed = 1;
 	return (0);

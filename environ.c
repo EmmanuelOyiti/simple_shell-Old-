@@ -8,7 +8,7 @@
  */
 int show_environment(info_t *info)
 {
-	print_list_str(info->env);
+	print_str_elements(info->env);
 	return (0);
 }
 
@@ -21,7 +21,7 @@ int show_environment(info_t *info)
  */
 char *get_var_value(info_t *info, const char *name)
 {
-	list_t *node = info->env;
+	list_element *node = info->env;
 	char *p;
 
 	while (node)
@@ -82,11 +82,11 @@ int unset_my_variable(info_t *info)
  */
 int create_my_variable_ls(info_t *info)
 {
-	list_t *node = NULL;
+	list_element *node = NULL;
 	size_t i;
 
 	for (i = 0; environ[i]; i++)
-		add_node_end(&node, environ[i], 0);
+		insert_at_end(&node, environ[i], 0);
 	info->env = node;
 	return (0);
 }

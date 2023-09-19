@@ -34,7 +34,7 @@ int write_hstry_file(info_t *info)
 {
 	ssize_t fd;
 	char *filename = get_hstry_file(info);
-	list_t *node = NULL;
+	list_element *node = NULL;
 
 	if (!filename)
 		return (-1);
@@ -97,7 +97,7 @@ int read_hstry_file(info_t *info)
 	free(buf);
 	info->histcount = linecount;
 	while (info->histcount-- >= HIST_MAX)
-		delete_node_at_index(&(info->history), 0);
+		remove_element_at_index(&(info->history), 0);
 	upt_hstry_number(info);
 	return (info->histcount);
 }
@@ -112,11 +112,11 @@ int read_hstry_file(info_t *info)
  */
 int add_entry_hstry_list(info_t *info, char *buf, int linecount)
 {
-	list_t *node = NULL;
+	list_element *node = NULL;
 
 	if (info->history)
 		node = info->history;
-	add_node_end(&node, buf, linecount);
+	insert_at_end(&node, buf, linecount);
 
 	if (!info->history)
 		info->history = node;
@@ -131,7 +131,7 @@ int add_entry_hstry_list(info_t *info, char *buf, int linecount)
  */
 int upt_hstry_number(info_t *info)
 {
-	list_t *node = info->history;
+	list_element *node = info->history;
 	int i = 0;
 
 	while (node)
