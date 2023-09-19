@@ -1,24 +1,24 @@
 #include "shell.h"
 
 /**
- * _erratoi - changes a string to an integer
+ * convert_to_int - changes a string to an integer
  * @s: our string to be changed
  * Return: 0 if no nums in our string, converted numr otherwise
  *       -1 on error
  */
-int _erratoi(char *s)
+int convert_to_int(char *text)
 {
 	int i = 0;
 	unsigned long int result = 0;
 
-	if (*s == '+')
-		s++;
-	for (i = 0; s[i] != '\0'; i++)
+	if (*text == '+')
+		text++;
+	for (i = 0; text[i] != '\0'; i++)
 	{
-		if (s[i] >= '0' && s[i] <= '9')
+		if (text[i] >= '0' && text[i] <= '9')
 		{
 			result *= 10;
-			result += (s[i] - '0');
+			result += (text[i] - '0');
 			if (result > INT_MAX)
 				return (-1);
 		}
@@ -29,17 +29,17 @@ int _erratoi(char *s)
 }
 
 /**
- * print_error - generates an error response
+ * show_error_ms - generates an error response
  * @info: parameter's value and return information struct
  * @estr: reps the requested error type
  * Return: 0 if no nums in string, converted number if not
  *        -1 on error
  */
-void print_error(info_t *info, char *estr)
+void show_error_ms(info_t *info, char *estr)
 {
 	_eputs(info->fname);
 	_eputs(": ");
-	print_d(info->line_count, STDERR_FILENO);
+	shows_int(info->line_count, STDERR_FILENO);
 	_eputs(": ");
 	_eputs(info->argv[0]);
 	_eputs(": ");
@@ -47,13 +47,13 @@ void print_error(info_t *info, char *estr)
 }
 
 /**
- * print_d - prints a decimal (integer) number in the 10th base
+ * shows_int - prints a decimal (integer) number in the 10th base
  * @input: input parameter
  * @fd: is the filedescriptor which to write to
  *
  * Return: number of characters printed
  */
-int print_d(int input, int fd)
+int shows_int(int input, int fd)
 {
 	int (*__putchar)(char) = _putchar;
 	int i, count = 0;

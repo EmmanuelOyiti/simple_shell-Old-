@@ -1,25 +1,25 @@
 #include "shell.h"
 
 /**
- * _myenv - displays the environment running
+ * show_environment - displays the environment running
  * @info: Struct containing probable arguments. 
  *	Maintains constant funct prototype.
  * Return: Always returns 0
  */
-int _myenv(info_t *info)
+int show_environment(info_t *info)
 {
 	print_list_str(info->env);
 	return (0);
 }
 
 /**
- * _getenv - retrieves value of an environ variable
+ * get_var_value - retrieves value of an environ variable
  * @info: Struct containing probable arguments. 
  *	Maintains @name: env var name
  *
  * Return: returns the value
  */
-char *_getenv(info_t *info, const char *name)
+char *get_var_value(info_t *info, const char *name)
 {
 	list_t *node = info->env;
 	char *p;
@@ -35,13 +35,13 @@ char *_getenv(info_t *info, const char *name)
 }
 
 /**
- * _mysetenv - Commences a new environment variable,
+ * set_my_variable - Commences a new environment variable,
  *             or changes an existing one
  * @info: Struct having probable arguments. 
  *	Maintains constant function prototype.
  *  Return: Always returns 0
  */
-int _mysetenv(info_t *info)
+int set_my_variable(info_t *info)
 {
 	if (info->argc != 3)
 	{
@@ -54,12 +54,12 @@ int _mysetenv(info_t *info)
 }
 
 /**
- * _myunsetenv - clear an environ variable
+ * unset_my_variable - clear an environ variable
  * @info: Struct containing probable arguments. 
  *	Used to maintain constant function prototype.
  *  Return: Always returns 0.
  */
-int _myunsetenv(info_t *info)
+int unset_my_variable(info_t *info)
 {
 	int i;
 
@@ -75,12 +75,12 @@ int _myunsetenv(info_t *info)
 }
 
 /**
- * populate_env_list - populates env linked list
+ * create_my_variable_ls - populates env linked list
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
  */
-int populate_env_list(info_t *info)
+int create_my_variable_ls(info_t *info)
 {
 	list_t *node = NULL;
 	size_t i;

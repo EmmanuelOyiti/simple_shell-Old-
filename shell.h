@@ -167,16 +167,16 @@ int _isalpha(int);
 int _atoi(char *);
 
 /* toem_errors1.c */
-int _erratoi(char *);
-void print_error(info_t *, char *);
-int print_d(int, int);
+int convert_to_int(char *);
+void show_error_ms(info_t *, char *);
+int shows_int(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
 
 /* toem_builtin.c */
-int _myexit(info_t *);
-int _mycd(info_t *);
-int _myhelp(info_t *);
+int exit_command(info_t *);
+int change_directory_command(info_t *);
+int show_help(info_t *);
 
 /* toem_builtin1.c */
 int _myhistory(info_t *);
@@ -193,23 +193,23 @@ void set_info(info_t *, char **);
 void free_info(info_t *, int);
 
 /* toem_environ.c */
-char *_getenv(info_t *, const char *);
-int _myenv(info_t *);
-int _mysetenv(info_t *);
-int _myunsetenv(info_t *);
-int populate_env_list(info_t *);
+char *get_var_value(info_t *, const char *);
+int  show_environment(info_t *);
+int set_my_variable(info_t *);
+int unset_my_variable(info_t *);
+int create_my_variable_ls(info_t *);
 
-/* toem_getenv.c */
+/* toem_get_var_value.c */
 char **get_environ(info_t *);
 int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
 
 /* toem_history.c */
-char *get_history_file(info_t *info);
-int write_history(info_t *info);
-int read_history(info_t *info);
-int build_history_list(info_t *info, char *buf, int linecount);
-int renumber_history(info_t *info);
+char *get_hstry_file(info_t *info);
+int write_hstry_file(info_t *info);
+int read_hstry_file(info_t *info);
+int add_entry_hstry_list(info_t *info, char *buf, int linecount);
+int upt_hstry_number(info_t *info);
 
 /* toem_lists.c */
 list_t *add_node(list_t **, const char *, int);

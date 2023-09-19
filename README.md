@@ -60,4 +60,4 @@ In interactive mode, **hsh** disregards Ctrl+C but recognizes the end-of-file in
 ## Authors
 
 - Emmanuel Oyiti
-- Donald Fifonsi
+
