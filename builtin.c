@@ -1,17 +1,17 @@
 #include "shell.h"
 
 /**
- * exit_command - this exits the shell we in
+ * exit_command - ends the current shell.
  * @info: The structure containing potential arguments. Used to maintain
  *       out constant function prototype.
- * Return:  returns exits with our given exit status
- * reuturns (0) if info.argv[0] != "exit"
+ * Return:  exits with the exit status we specified 
+ * returns (0) if info.argv[0] != "exit"
  */
 int exit_command(info_t *info)
 {
 	int exitcheck;
 
-	if (info->argv[1]) /* Maybe if there is an exit argument */
+	if (info->argv[1]) 
 	{
 		exitcheck = convert_to_int(info->argv[1]);
 		if (exitcheck == -1)
